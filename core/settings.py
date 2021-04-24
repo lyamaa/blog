@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # apps
     'blog',
     'blog_api',
+    'accounts',
 
     #  3rd apps
     'corsheaders',
@@ -145,3 +146,6 @@ CORS_ALLOWED_ORIGINS = [
 
 # CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
+
+# Custom user model
+AUTH_USER_MODEL = "accounts.MyUser"
