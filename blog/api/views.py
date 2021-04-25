@@ -22,6 +22,7 @@ from rest_framework.response import Response
 from blog.models import Category, Post
 from .serializers import PostSerializer
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 class PostUserWritePermission(BasePermission):
     message = 'Editing post is restricted to author only.'
 
@@ -94,11 +95,12 @@ class PostListDetailfilter(generics.ListAPIView):
 class CreatePost(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
+    parser_classes = [MultiPartParser, FormParser]
     
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(author=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -118,6 +120,7 @@ class AdminPostDetail(APIView):
 class EditPost(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
+    parser_classes = [MultiPartParser, FormParser]
 
     def put(self, request, pk, format=None):
         post = Post.objects.get(pk=pk)
