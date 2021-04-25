@@ -9,6 +9,8 @@ python = "^3.9"
 djangorestframework = "^3.12.4"
 django-cors-headers = "^3.7.0"
 djangorestframework-simplejwt = "^4.6.0"
+drf-yasg = "^1.20.0"
+pep8 = "^1.7.1"
 
 [tool.poetry.dev-dependencies]
 
